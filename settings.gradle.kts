@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "ASMAndroid"
 include(":app")
- 
