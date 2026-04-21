@@ -1,4 +1,4 @@
-package com.afternote.asmandroid.ui.screen
+package com.afternote.asmandroid.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,12 +15,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.afternote.asmandroid.data.api.IntroResponse
-import com.afternote.asmandroid.ui.viewmodel.HomeUiState
-import com.afternote.asmandroid.ui.viewmodel.HomeViewModel
+import com.afternote.asmandroid.domain.entity.IntroEntity
+import com.afternote.asmandroid.presentation.viewmodel.HomeUiState
+import com.afternote.asmandroid.presentation.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(
@@ -29,28 +28,7 @@ fun HomeScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    HomeScreenContent(
-        modifier = modifier,
-        uiState = uiState,
-    )
-}
-
-@Composable
-private fun IntroContent(state: HomeUiState.Success) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(24.dp),
-    ) {
-        Text(
-            text = state.data.debugTestMessage,
-            style = MaterialTheme.typography.headlineSmall,
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "최소 앱 버전: ${state.data.minAppVersion}")
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "권장 앱 버전: ${state.data.recommendAppVersion}")
-    }
+    HomeScreenContent(modifier = modifier, uiState = uiState)
 }
 
 @Composable
@@ -75,24 +53,26 @@ private fun HomeScreenContent(
             }
 
             is HomeUiState.Success -> {
-                IntroContent(state)
+                IntroContent(state.data)
             }
         }
     }
 }
 
 @Composable
-@Preview(showBackground = true)
-private fun HomeScreenPreview() {
-    HomeScreenContent(
-        uiState =
-            HomeUiState.Success(
-                data =
-                    IntroResponse(
-                        minAppVersion = 1,
-                        recommendAppVersion = 2,
-                        debugTestMessage = "테스트 메시지",
-                    ),
-            ),
-    )
+private fun IntroContent(entity: IntroEntity) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.padding(24.dp),
+    ) {
+        Text(
+            text = entity.debugTestMessage,
+            style = MaterialTheme.typography.headlineSmall,
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "최소 앱 버전: ${entity.minAppVersion}")
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = "권장 앱 버전: ${entity.recommendAppVersion}")
+    }
 }

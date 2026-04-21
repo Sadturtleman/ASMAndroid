@@ -1,8 +1,8 @@
 package com.afternote.asmandroid.di
 
 import com.afternote.asmandroid.data.api.IntroApiService
-import com.afternote.asmandroid.data.repository.IntroRepository
 import com.afternote.asmandroid.data.repository.IntroRepositoryImpl
+import com.afternote.asmandroid.domain.repository.IntroRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

@@ -1,6 +1,6 @@
-package com.afternote.asmandroid.data.api
+package com.afternote.asmandroid.domain.entity
 
-data class IntroResponse(
+data class IntroEntity(
     val minAppVersion: Int,
     val recommendAppVersion: Int,
     val debugTestMessage: String
